@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    tools:context=".JoinCircleScreen">
+
+    <!-- Back Arrow Section -->
+
+
+    <!-- Title -->
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15sp"
+        android:layout_marginTop="4sp"
+        android:layout_marginEnd="24sp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/backArrow"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:clickable="true"
+            android:contentDescription="Back"
+            android:focusable="true"
+            android:src="@drawable/arrowback" />
+
+        <TextView
+            android:id="@+id/joinTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="Invite Code"
+            android:textColor="#2D0C57"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Invite members to the\nFriends Circle"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#1C1B1F"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/topBar"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Subtitle -->
+    <TextView
+        android:id="@+id/subTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Share your code out loud or send it in a message"
+        android:textSize="14sp"
+        android:textColor="#A0A0A0"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/titleText"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Invite code box -->
+    <LinearLayout
+        android:id="@+id/codeContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#F3EFFF"
+        android:padding="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="24dp"
+        android:elevation="2dp"
+        app:layout_constraintTop_toBottomOf="@id/subTitleText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Code -->
+        <TextView
+            android:id="@+id/inviteCodeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="IAF-QGP"
+            android:textSize="24sp"
+            android:textColor="#8A3FFF"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal" />
+
+        <!-- Code validity -->
+        <TextView
+            android:id="@+id/codeInfoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This code will be active for 3 days"
+            android:textSize="14sp"
+            android:textColor="#808080"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+
+    <!-- Send Code Button -->
+    <Button
+        android:id="@+id/sendCodeButton"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:text="Send Code"
+        android:textAllCaps="false"
+        android:backgroundTint="#8A3FFF"
+        android:textColor="#FFFFFF"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintTop_toBottomOf="@id/codeContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

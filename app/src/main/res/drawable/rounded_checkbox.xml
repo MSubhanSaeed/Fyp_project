@@ -1,0 +1,23 @@
+<!-- res/drawable/hollow_button_selector.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Checked state (fully transparent) -->
+    <item android:state_checked="true">
+        <shape>
+            <solid android:color="@android:color/transparent" /> <!-- Transparent -->
+            <stroke
+                android:width="2dp"
+                android:color="@android:color/transparent" /> <!-- Transparent border -->
+            <corners android:radius="16dp" />
+        </shape>
+    </item>
+    <!-- Default state (hollow with a border) -->
+    <item>
+        <shape>
+            <solid android:color="@android:color/transparent" /> <!-- Transparent inside -->
+            <stroke
+                android:width="2dp"
+                android:color="#56C77C" /> <!-- Purple border -->
+            <corners android:radius="16dp" />
+        </shape>
+    </item>
+</selector>

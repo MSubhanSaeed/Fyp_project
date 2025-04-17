@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".JoinCircleScreen">
+
+    <LinearLayout
+        android:id="@+id/joinCircleLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal"
+        android:background="@android:color/white">
+
+        <!-- Back Arrow Section -->
+        <LinearLayout
+            android:id="@+id/topBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/backArrow"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/arrowback"
+                android:contentDescription="Back"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:id="@+id/joinTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Join a Circle"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginStart="12dp"
+                android:textColor="#2D0C57" />
+        </LinearLayout>
+
+        <!-- Title Text -->
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter the invite code"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#2D0C57"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Code Input Section (6 EditTexts) -->
+        <LinearLayout
+            android:id="@+id/codeContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="16dp">
+
+            <EditText
+                android:id="@+id/code1"
+                style="@style/CodeInputStyle"
+                android:contentDescription="Code input 1" />
+            <EditText
+                android:id="@+id/code2"
+                style="@style/CodeInputStyle"
+                android:contentDescription="Code input 2" />
+            <EditText
+                android:id="@+id/code3"
+                style="@style/CodeInputStyle"
+                android:contentDescription="Code input 3" />
+            <EditText
+                android:id="@+id/code4"
+                style="@style/CodeInputStyle"
+                android:contentDescription="Code input 4" />
+            <EditText
+                android:id="@+id/code5"
+                style="@style/CodeInputStyle"
+                android:contentDescription="Code input 5" />
+            <EditText
+                android:id="@+id/code6"
+                style="@style/CodeInputStyle"
+                android:contentDescription="Code input 6" />
+        </LinearLayout>
+
+        <!-- Description Text -->
+        <TextView
+            android:id="@+id/descriptionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Get the code from the person\nsetting up your family's Circle"
+            android:textAlignment="center"
+            android:textColor="#9B9B9B"
+            android:textSize="14sp"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Submit Button -->
+        <Button
+            android:id="@+id/submitButton"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/submit_button_background"
+            android:backgroundTint="#DADADA"
+            android:enabled="false"
+            android:text="Submit"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

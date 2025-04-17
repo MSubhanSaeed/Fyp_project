@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PlacesScreen">
+
+    <!-- Back Button -->
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="25dp"
+        android:contentDescription="Back"
+        android:src="@drawable/arrowback"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Title -->
+
+
+    <TextView
+        android:id="@+id/tvEditProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Places Screen"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:queryHint="Search Circle Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:background="#dddddd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/groupNamesRecyclerView"
+        android:layout_width="413dp"
+        android:layout_height="430dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        app:layout_constraintVertical_bias="0.043" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/Addgeofence"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="136dp"
+        android:layout_marginEnd="119dp"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/rounded_button"
+        android:text="Add GeoFence"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.704"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/bottomNavBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:background="@android:color/white"
+        android:backgroundTint="@color/Light_Silver"
+        android:elevation="8sp"
+        android:orientation="horizontal"
+        android:padding="8sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <!-- Home Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnHome"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/transparent"
+            android:gravity="center"
+            android:insetTop="0sp"
+            android:insetBottom="0sp"
+            android:singleLine="true"
+            android:text="Home"
+            android:textColor="@android:color/black"
+            app:cornerRadius="0sp"
+            app:icon="@drawable/home"
+            app:iconGravity="top"
+            app:iconPadding="4sp"
+            app:iconTint="@color/black" />
+
+        <!-- Individual Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnIndividual"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/transparent"
+            android:gravity="center"
+            android:insetTop="0sp"
+            android:insetBottom="0sp"
+            android:singleLine="true"
+            android:text="Individual"
+            android:textColor="@android:color/black"
+            app:cornerRadius="0sp"
+            app:icon="@drawable/person"
+            app:iconGravity="top"
+            app:iconPadding="4sp"
+            app:iconTint="@color/black" />
+
+        <!-- Places Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPlaces"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/transparent"
+            android:gravity="center"
+            android:insetTop="0sp"
+            android:insetBottom="0sp"
+            android:singleLine="true"
+            android:text="Places"
+            android:textColor="@android:color/black"
+            app:cornerRadius="0sp"
+            app:icon="@drawable/marker"
+            app:iconGravity="top"
+            app:iconPadding="4sp"
+            app:iconTint="@color/black" />
+
+        <!-- Circle Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCircle"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/transparent"
+            android:gravity="center"
+            android:insetTop="0sp"
+            android:insetBottom="0sp"
+            android:singleLine="true"
+            android:text="Circle"
+            android:textColor="@android:color/black"
+            app:cornerRadius="0sp"
+            app:icon="@drawable/circles"
+            app:iconGravity="top"
+            app:iconPadding="4sp"
+            app:iconTint="@color/black" />
+
+        <!-- Account Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAccount"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/transparent"
+            android:gravity="center"
+            android:insetTop="0sp"
+            android:insetBottom="0sp"
+            android:singleLine="true"
+            android:text="Account"
+            android:textColor="@android:color/black"
+            app:cornerRadius="0sp"
+            app:icon="@drawable/account"
+            app:iconGravity="top"
+            app:iconPadding="4sp"
+            app:iconTint="@color/black" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
