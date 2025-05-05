@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="16sp">
 
             <EditText
                 android:id="@+id/code1"
@@ -112,7 +112,7 @@
             android:background="@drawable/submit_button_background"
             android:backgroundTint="#DADADA"
             android:enabled="false"
-            android:text="Submit"
+            android:text="Join Group"
             android:textAllCaps="false"
             android:textColor="#FFFFFF" />
     </LinearLayout>

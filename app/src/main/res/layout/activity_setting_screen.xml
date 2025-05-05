@@ -43,7 +43,7 @@
             android:id="@+id/headerTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Settings"
+            android:text="Accounts"
             android:textColor="@android:color/white"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -82,8 +82,10 @@
                 android:layout_height="1dp"
                 android:background="#dddddd" />
 
+
+            <!-- Edit Profile -->
             <LinearLayout
-                android:id="@+id/Role"
+                android:id="@+id/RoleOption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -91,7 +93,7 @@
                 android:gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/tvRole"
+                    android:id="@+id/tvrole"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="My Role"
@@ -102,13 +104,16 @@
                     android:background="?attr/selectableItemBackground" />
 
             </LinearLayout>
+
+
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#dddddd" />
-            <!-- Edit Profile -->
+
             <LinearLayout
-                android:id="@+id/editProfileOption"
+                android:id="@+id/Circlemembers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -116,10 +121,10 @@
                 android:gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/tvEditProfile"
+                    android:id="@+id/tvcmembers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Edit Profile"
+                    android:text="Add Circle Members"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:clickable="true"
@@ -127,71 +132,13 @@
                     android:background="?attr/selectableItemBackground" />
 
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#dddddd" />
 
 
-            <!-- Bluetooth -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/bluetoothBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="15dp">
-
-                <TextView
-                    android:id="@+id/bluetoothLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Bluetooth"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
-
-                <Switch
-                    android:id="@+id/bluetoothSwitch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#dddddd" />
-
-            <!-- Circle Management -->
-            <LinearLayout
-                android:id="@+id/circleOption"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="15dp"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:id="@+id/tvCircleManagement"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Circle Management"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?attr/selectableItemBackground" />
-
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#dddddd" />
-
             <LinearLayout
                 android:id="@+id/creategrp"
                 android:layout_width="match_parent"
@@ -242,38 +189,7 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- Logout -->
-    <LinearLayout
-        android:id="@+id/logoutContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="30dp"
-        android:padding="10dp"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintTop_toBottomOf="@+id/settingsCard"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageView
-            android:id="@+id/logoutIcon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/exit"
-            android:tint="@color/red"
-            android:layout_marginEnd="8dp" />
-
-        <TextView
-            android:id="@+id/logoutText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Logout"
-            android:textSize="18sp"
-            android:textColor="#d9534f"
-            android:textStyle="bold" />
-    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

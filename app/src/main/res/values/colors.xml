@@ -13,5 +13,6 @@
     <color name="red">#FA0404</color>
     <color name="Light_red">#DE2C2C</color>
     <color name="Light_Silver">#E0DDDD</color>
+    <color name="Tranparent_color">#00E0DDDD</color>
     <color name="white">#FBFBFB</color>
 </resources>

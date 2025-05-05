@@ -68,7 +68,7 @@
         android:id="@+id/radiusLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="500 ft zone"
+        android:text="500 meter\n Radius"
         android:textSize="12sp"
         app:layout_constraintTop_toBottomOf="@id/radiusSeekBar"
         app:layout_constraintStart_toStartOf="parent"
@@ -112,18 +112,16 @@
     <!-- Notification Section -->
 
     <!-- Delete Place Button -->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/notificationSections"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="402dp"
+        android:layout_height="139dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@id/deletePlaceBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/placeDetailsSection"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@id/placeDetailsSection">
 
         <TextView
             android:id="@+id/notifyLabel"
@@ -138,49 +136,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/personAvatar"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/circle_shape"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/GeofriendsRecyclerView"
+            android:layout_width="339dp"
+            android:layout_height="74dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="31dp"
+            android:layout_marginBottom="32dp"
+            android:clipToPadding="false"
             android:padding="8dp"
-            android:src="@drawable/person"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/notifyLabel" />
-
-        <TextView
-            android:id="@+id/personName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="Subhan"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@id/personAvatar"
-            app:layout_constraintStart_toEndOf="@id/personAvatar"
-            app:layout_constraintTop_toTopOf="@id/personAvatar" />
-
-        <Switch
-            android:id="@+id/arriveSwitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Arrives"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/personAvatar" />
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <Switch
-            android:id="@+id/leaveSwitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Leaves"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/arriveSwitch" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#dddddd" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/deletePlaceBtn"

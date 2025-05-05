@@ -1,18 +1,19 @@
 package com.example.fyp_application
 
-import androidx.appcompat.widget.SearchView
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.WindowCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fyp_application.databinding.ActivityCircleScreenBinding
@@ -20,35 +21,31 @@ import com.example.fyp_application.databinding.ActivityCircleScreenBinding
 class CircleScreen : AppCompatActivity() {
     private lateinit var binding: ActivityCircleScreenBinding
     private lateinit var groupAdapter: GroupAdapter
-    private var groupNames = listOf(
+    private var groupNames = mutableListOf(
         "Family Circle", "College Buddies", "Work Team", "Weekend Riders",
         "Gaming Squad", "Book Club", "Gym Group", "School Friends",
         "Cousins", "Neighborhood Watch", "Hiking Team"
     )
-    private var filteredGroupNames = groupNames.toMutableList() // List for filtered data
+    private var filteredGroupNames = groupNames.toMutableList()
 
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        // Initialize ViewBinding
         binding = ActivityCircleScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Set up bottom navigation button listeners
+        // Bottom navigation
         binding.btnHome.setOnClickListener {
             startActivity(Intent(this, HomeScreen::class.java))
         }
-
         binding.btnIndividual.setOnClickListener {
             startActivity(Intent(this, IndividualScreen::class.java))
         }
-
         binding.btnPlaces.setOnClickListener {
             startActivity(Intent(this, PlacesScreen::class.java))
         }
-
         binding.btnAccount.setOnClickListener {
             startActivity(Intent(this, SettingScreen::class.java))
         }
@@ -56,52 +53,52 @@ class CircleScreen : AppCompatActivity() {
         binding.creategrp.setOnClickListener {
             startActivity(Intent(this, JoinCircleScreen::class.java))
         }
-
         binding.addgrp.setOnClickListener {
             startActivity(Intent(this, CreateCircleScreen::class.java))
         }
+        binding.btnBack.setOnClickListener{
+            onBackPressedDispatcher.onBackPressed()
+        }
 
-        // Set up RecyclerView
+        // RecyclerView setup
         groupAdapter = GroupAdapter(filteredGroupNames)
         binding.groupNamesRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.groupNamesRecyclerView.adapter = groupAdapter
 
-        // Set up SearchView and handle query text changes
+        // SearchView setup
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
+            override fun onQueryTextSubmit(query: String?): Boolean = false
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                filterList(newText) // Call filter function when text changes
+                filterList(newText)
                 return true
             }
         })
     }
 
-    // Function to filter the list based on search text
     private fun filterList(query: String?) {
         filteredGroupNames.clear()
         if (query.isNullOrEmpty()) {
-            filteredGroupNames.addAll(groupNames) // Show all items if search is empty
+            filteredGroupNames.addAll(groupNames)
         } else {
             val lowerCaseQuery = query.toLowerCase()
             groupNames.forEach { group ->
                 if (group.toLowerCase().contains(lowerCaseQuery)) {
-                    filteredGroupNames.add(group) // Add item if it matches the query
+                    filteredGroupNames.add(group)
                 }
             }
         }
-        groupAdapter.notifyDataSetChanged() // Notify adapter to update RecyclerView
+        groupAdapter.notifyDataSetChanged()
     }
 
-    // Adapter class for RecyclerView
-    class GroupAdapter(private val groupList: List<String>) :
+    // Adapter
+    inner class GroupAdapter(private val groupList: MutableList<String>) :
         RecyclerView.Adapter<GroupAdapter.GroupViewHolder>() {
 
         inner class GroupViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val groupNameText: TextView = itemView.findViewById(R.id.groupNameText)
-            val groupIcon: ImageView = itemView.findViewById(R.id.groupIcon)
+            val groupIcon: ImageView = itemView.findViewById(R.id.groupIcon)  // Delete icon
+            val editIcon: ImageView = itemView.findViewById(R.id.EditIcon)    // Edit icon
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
@@ -114,28 +111,46 @@ class CircleScreen : AppCompatActivity() {
             val groupName = groupList[position]
 
             holder.groupNameText.text = groupName
-            holder.groupIcon.setImageResource(R.drawable.delete) // Replace with your actual image
+            holder.groupIcon.setImageResource(R.drawable.delete)
+            holder.editIcon.setImageResource(R.drawable.pencil)
 
-            // Image click logic
+            // Delete button click
             holder.groupIcon.setOnClickListener {
-                // Show confirmation dialog
                 val dialog = AlertDialog.Builder(holder.itemView.context)
                     .setMessage("Are you sure you want to delete $groupName?")
                     .setPositiveButton("OK") { _, _ ->
-                        // Delete the group name from the list
-                        (groupList as MutableList).removeAt(position)  // Remove item at that position
-                        notifyItemRemoved(position)  // Notify the adapter that item has been removed
-                        notifyItemRangeChanged(position, groupList.size) // Update the rest of the list
-                        Toast.makeText(
-                            holder.itemView.context,
-                            "$groupName has been deleted",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        groupList.removeAt(position)
+                        notifyItemRemoved(position)
+                        notifyItemRangeChanged(position, groupList.size)
+                        Toast.makeText(holder.itemView.context, "$groupName has been deleted", Toast.LENGTH_SHORT).show()
                     }
                     .setNegativeButton("Cancel", null)
                     .create()
+                dialog.show()
+            }
 
-                dialog.show()  // Display the dialog
+            // Edit button click
+            holder.editIcon.setOnClickListener {
+                val context = holder.itemView.context
+                val editText = EditText(context)
+                editText.setText(groupName)
+
+                val dialog = AlertDialog.Builder(context)
+                    .setTitle("Edit Group Name")
+                    .setView(editText)
+                    .setPositiveButton("Save") { _, _ ->
+                        val newName = editText.text.toString().trim()
+                        if (newName.isNotEmpty()) {
+                            groupList[position] = newName
+                            notifyItemChanged(position)
+                            Toast.makeText(context, "Group renamed to $newName", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(context, "Group name cannot be empty!", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    .setNegativeButton("Cancel", null)
+                    .create()
+                dialog.show()
             }
         }
 
