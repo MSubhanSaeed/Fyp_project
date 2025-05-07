@@ -51,15 +51,13 @@ class PlacesScreen : AppCompatActivity() {
         }
 
         binding.btnAccount.setOnClickListener {
-            startActivity(Intent(this, SettingScreen::class.java))
+            startActivity(Intent(this, AccountScreen::class.java))
         }
 
         binding.Addgeofence.setOnClickListener {
             startActivity(Intent(this, GeofenceScreen::class.java))
         }
-        binding.btnBack.setOnClickListener{
-            onBackPressedDispatcher.onBackPressed()
-        }
+
 
         groupAdapter = GroupAdapter(filteredGroupNames)
         binding.groupNamesRecyclerView.layoutManager = LinearLayoutManager(this)

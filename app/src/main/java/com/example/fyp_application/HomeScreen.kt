@@ -17,7 +17,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fyp_application.databinding.ActivityHomeScreenBinding
-import com.example.fyp_application.model.Friend
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -30,7 +29,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlin.random.Random
 
 class HomeScreen : AppCompatActivity(), OnMapReadyCallback {
 
@@ -52,30 +50,24 @@ class HomeScreen : AppCompatActivity(), OnMapReadyCallback {
             this.state=BottomSheetBehavior.STATE_COLLAPSED
         }
 
-        val friendsList = listOf(
-            Friend("Subhan", true),
-            Friend("Ali Haider", false),
-            Friend("Kamran", true),
-            Friend("Aminullah", true),
-            Friend("Saad Haider", false),
-            Friend("Arslan", false),
-            Friend("Hashir", true),
-            Friend("Hadi ", false),
+        // In your HomeScreen's onCreate()
+        val friendItems = listOf(
+            FriendItem.Friend("Subhan", true),
+            FriendItem.Friend("Ali Haider", false),
+            FriendItem.Friend("Kamran", true),
+            FriendItem.Friend("Aminullah", true),
+            FriendItem.Friend("Saad Haider", false),
+            FriendItem.Friend("Arslan", false),
+            FriendItem.Friend("Hashir", true),
+            FriendItem.Friend("Hadi", false),
+            FriendItem.AddButton // Add this as the last item
         )
 
-        val frndadapter = FriendsAdapter(friendsList)
+        val adapter = FriendsAdapter(friendItems)
         binding.friendsRecyclerView.layoutManager = LinearLayoutManager(this)
-        binding.friendsRecyclerView.adapter = frndadapter
+        binding.friendsRecyclerView.adapter = adapter
 
 
-        val randomNames = listOf("Ali", "Ahmed", "Aisha", "Fatima", "Hassan", "Zain", "Hina", "Omar", "Sara", "Bilal")
-
-        // Generate random pairs with tracking enabled or disabled
-        val namePairs = List(5) {
-            val name = randomNames[Random.nextInt(randomNames.size)]
-            val trackingEnabled = Random.nextBoolean()
-            Pair(name, trackingEnabled)
-        }
         binding.btnIndividual.setOnClickListener {
             // Create an Intent to start HomeActivity
             val intent = Intent(this, IndividualScreen::class.java)
@@ -93,7 +85,7 @@ class HomeScreen : AppCompatActivity(), OnMapReadyCallback {
         }
         binding.btnAccount.setOnClickListener {
             // Create an Intent to start HomeActivity
-            val intent = Intent(this, SettingScreen::class.java)
+            val intent = Intent(this, AccountScreen::class.java)
             startActivity(intent)
         }
         binding.btnSettings.setOnClickListener {
@@ -132,10 +124,10 @@ class HomeScreen : AppCompatActivity(), OnMapReadyCallback {
     private fun setupSpinner() {
         val spinner: Spinner = binding.dropDownMenu
 
-        val adapter = ArrayAdapter.createFromResource(
+        val adapter = ArrayAdapter(
             this,
-            R.array.dropdown_items, // Your dropdown_items array
-            R.layout.custom_spinner_item
+            R.layout.custom_spinner_item,
+            GroupRepository.groupNames
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
@@ -143,10 +135,7 @@ class HomeScreen : AppCompatActivity(), OnMapReadyCallback {
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectedItem = parent?.getItemAtPosition(position).toString()
-
-                // ✅ Set selected text + keep "in Circle" fixed
                 binding.friendsInCircleTitle.text = "$selectedItem Circle"
-
                 Toast.makeText(this@HomeScreen, "Selected: $selectedItem", Toast.LENGTH_SHORT).show()
             }
 
@@ -154,8 +143,8 @@ class HomeScreen : AppCompatActivity(), OnMapReadyCallback {
                 // Do nothing
             }
         }
-
     }
+
 
 
     override fun onMapReady(googleMap: GoogleMap) {

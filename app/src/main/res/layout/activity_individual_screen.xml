@@ -23,7 +23,7 @@
         <FrameLayout
             android:id="@+id/sheet"
             android:layout_width="match_parent"
-            android:layout_height="450dp"
+            android:layout_height="600dp"
             android:background="@drawable/rounded"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
@@ -117,9 +117,9 @@
                 <!-- RecyclerView for Friends List -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/friendsRecyclerView"
-                    android:layout_width="369dp"
-                    android:layout_height="194dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_width="319dp"
+                    android:layout_height="285dp"
+                    android:layout_marginTop="8dp"
                     android:clipToPadding="false"
                     android:padding="8dp"
                     app:layout_constraintEnd_toEndOf="parent"

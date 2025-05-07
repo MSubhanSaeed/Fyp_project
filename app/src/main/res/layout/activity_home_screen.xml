@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="62sp"
         android:layout_margin="16sp"
-        android:background="@color/purple_200"
+        android:background="@drawable/rounded_button"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.button.MaterialButton
@@ -33,11 +33,11 @@
             android:textColor="@android:color/black"
             app:backgroundTint="@color/Light_Silver"
             app:cornerRadius="8dp"
-            app:icon="@drawable/settingmap"
+            app:icon="@drawable/setting"
             app:iconGravity="textStart"
             app:iconPadding="8dp"
             app:iconSize="25dp"
-            app:iconTint="@android:color/black"
+            app:iconTint="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:rippleColor="@color/blue"
@@ -67,11 +67,11 @@
             android:paddingHorizontal="10dp"
             android:paddingVertical="8dp"
             app:cornerRadius="8dp"
-            app:icon="@drawable/bellnotification"
+            app:icon="@drawable/notification"
             app:iconGravity="textStart"
             app:iconPadding="8dp"
             app:iconSize="25dp"
-            app:iconTint="@android:color/black"
+            app:iconTint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -86,14 +86,14 @@
         <FrameLayout
             android:id="@+id/sheet"
             android:layout_width="match_parent"
-            android:layout_height="450dp"
+            android:layout_height="600dp"
             android:background="@drawable/rounded"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
             <!-- Contents inside the Bottom Sheet -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="430dp"
                 android:padding="16dp">
 
                 <!-- Top Drag Handle Image -->
@@ -101,38 +101,38 @@
                     android:id="@+id/dragHandle"
                     android:layout_width="116dp"
                     android:layout_height="32dp"
+                    android:layout_marginBottom="8dp"
                     android:src="@drawable/remove"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginBottom="8dp" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <!-- "Friends in Circle" Title -->
                 <TextView
                     android:id="@+id/friendsInCircleTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="12dp"
                     android:text="Friends in Circle"
                     android:textColor="@android:color/black"
                     android:textSize="17sp"
                     android:textStyle="bold"
-                    app:layout_constraintTop_toBottomOf="@id/dragHandle"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="12dp" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dragHandle" />
 
                 <!-- "Me" Section -->
                 <LinearLayout
                     android:id="@+id/meSection"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp"
                     android:gravity="center_vertical"
-                    app:layout_constraintTop_toBottomOf="@id/friendsInCircleTitle"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginBottom="12dp">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/friendsInCircleTitle">
 
                     <TextView
                         android:id="@+id/Myself"
@@ -146,17 +146,17 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal">
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/MyswitchLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
                             android:text="Allow Tracking"
                             android:textColor="@android:color/black"
-                            android:textSize="12sp"
-                            android:layout_marginBottom="4dp" />
+                            android:textSize="12sp" />
 
                         <Switch
                             android:id="@+id/Meswitch"
@@ -171,18 +171,18 @@
                     android:id="@+id/divider"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
+                    android:layout_marginBottom="12dp"
                     android:background="#dddddd"
-                    app:layout_constraintTop_toBottomOf="@id/meSection"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginBottom="12dp" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/meSection" />
 
                 <!-- RecyclerView for Friends List -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/friendsRecyclerView"
-                    android:layout_width="369dp"
-                    android:layout_height="194dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_width="319dp"
+                    android:layout_height="285dp"
+                    android:layout_marginTop="8dp"
                     android:clipToPadding="false"
                     android:padding="8dp"
                     app:layout_constraintEnd_toEndOf="parent"

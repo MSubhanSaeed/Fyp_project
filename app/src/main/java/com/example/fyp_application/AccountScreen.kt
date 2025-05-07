@@ -1,24 +1,21 @@
 package com.example.fyp_application
 
-import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.fyp_application.databinding.ActivitySettingScreenBinding
+import com.example.fyp_application.databinding.ActivityAccountScreenBinding
 
-class SettingScreen : AppCompatActivity() {
-    private lateinit var binding: ActivitySettingScreenBinding
+class AccountScreen : AppCompatActivity() {
+    private lateinit var binding: ActivityAccountScreenBinding
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivitySettingScreenBinding.inflate(layoutInflater)
+        binding = ActivityAccountScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setupNavigation()

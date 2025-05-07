@@ -28,7 +28,7 @@
             android:name=".Main_Settings_Screen"
             android:exported="false" />
         <activity
-            android:name=".GeofenceScreen"
+            android:name=".SignUp"
             android:exported="false" />
         <activity
             android:name=".StopLocation_Profile"
@@ -46,7 +46,7 @@
             android:name=".EditProfile_Screen"
             android:exported="false" />
         <activity
-            android:name=".SettingScreen"
+            android:name=".AccountScreen"
             android:exported="false" />
         <activity
             android:name=".CreateGroupScreen"
@@ -73,13 +73,13 @@
             android:name=".LoginScreen"
             android:exported="false" />
         <activity
-            android:name=".HomeScreen"
+            android:name=".GeofenceScreen"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".SignUp"
+            android:name=".HomeScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

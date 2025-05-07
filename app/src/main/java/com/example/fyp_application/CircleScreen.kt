@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -21,11 +18,8 @@ import com.example.fyp_application.databinding.ActivityCircleScreenBinding
 class CircleScreen : AppCompatActivity() {
     private lateinit var binding: ActivityCircleScreenBinding
     private lateinit var groupAdapter: GroupAdapter
-    private var groupNames = mutableListOf(
-        "Family Circle", "College Buddies", "Work Team", "Weekend Riders",
-        "Gaming Squad", "Book Club", "Gym Group", "School Friends",
-        "Cousins", "Neighborhood Watch", "Hiking Team"
-    )
+    private lateinit var spinnerAdapter: ArrayAdapter<String>
+    private val groupNames get() = GroupRepository.groupNames
     private var filteredGroupNames = groupNames.toMutableList()
 
     @SuppressLint("RestrictedApi")
@@ -36,7 +30,7 @@ class CircleScreen : AppCompatActivity() {
         binding = ActivityCircleScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Bottom navigation
+        // Navigation
         binding.btnHome.setOnClickListener {
             startActivity(Intent(this, HomeScreen::class.java))
         }
@@ -47,7 +41,7 @@ class CircleScreen : AppCompatActivity() {
             startActivity(Intent(this, PlacesScreen::class.java))
         }
         binding.btnAccount.setOnClickListener {
-            startActivity(Intent(this, SettingScreen::class.java))
+            startActivity(Intent(this, AccountScreen::class.java))
         }
 
         binding.creategrp.setOnClickListener {
@@ -56,19 +50,19 @@ class CircleScreen : AppCompatActivity() {
         binding.addgrp.setOnClickListener {
             startActivity(Intent(this, CreateCircleScreen::class.java))
         }
-        binding.btnBack.setOnClickListener{
-            onBackPressedDispatcher.onBackPressed()
-        }
 
         // RecyclerView setup
         groupAdapter = GroupAdapter(filteredGroupNames)
         binding.groupNamesRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.groupNamesRecyclerView.adapter = groupAdapter
 
-        // SearchView setup
+        // Spinner adapter setup
+        spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, filteredGroupNames)
+        binding.dropDownMenu.adapter = spinnerAdapter
+
+        // Search functionality
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean = false
-
             override fun onQueryTextChange(newText: String?): Boolean {
                 filterList(newText)
                 return true
@@ -81,24 +75,24 @@ class CircleScreen : AppCompatActivity() {
         if (query.isNullOrEmpty()) {
             filteredGroupNames.addAll(groupNames)
         } else {
-            val lowerCaseQuery = query.toLowerCase()
+            val lowerCaseQuery = query.lowercase()
             groupNames.forEach { group ->
-                if (group.toLowerCase().contains(lowerCaseQuery)) {
+                if (group.lowercase().contains(lowerCaseQuery)) {
                     filteredGroupNames.add(group)
                 }
             }
         }
         groupAdapter.notifyDataSetChanged()
+        spinnerAdapter.notifyDataSetChanged()
     }
 
-    // Adapter
     inner class GroupAdapter(private val groupList: MutableList<String>) :
         RecyclerView.Adapter<GroupAdapter.GroupViewHolder>() {
 
         inner class GroupViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val groupNameText: TextView = itemView.findViewById(R.id.groupNameText)
-            val groupIcon: ImageView = itemView.findViewById(R.id.groupIcon)  // Delete icon
-            val editIcon: ImageView = itemView.findViewById(R.id.EditIcon)    // Edit icon
+            val groupIcon: ImageView = itemView.findViewById(R.id.groupIcon)
+            val editIcon: ImageView = itemView.findViewById(R.id.EditIcon)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
@@ -109,19 +103,20 @@ class CircleScreen : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: GroupViewHolder, position: Int) {
             val groupName = groupList[position]
-
             holder.groupNameText.text = groupName
             holder.groupIcon.setImageResource(R.drawable.delete)
             holder.editIcon.setImageResource(R.drawable.pencil)
 
-            // Delete button click
+            // Delete action
             holder.groupIcon.setOnClickListener {
                 val dialog = AlertDialog.Builder(holder.itemView.context)
                     .setMessage("Are you sure you want to delete $groupName?")
                     .setPositiveButton("OK") { _, _ ->
-                        groupList.removeAt(position)
+                        groupNames.remove(groupName) // Remove from main list
+                        groupList.removeAt(position) // Remove from filtered list
                         notifyItemRemoved(position)
                         notifyItemRangeChanged(position, groupList.size)
+                        spinnerAdapter.notifyDataSetChanged()
                         Toast.makeText(holder.itemView.context, "$groupName has been deleted", Toast.LENGTH_SHORT).show()
                     }
                     .setNegativeButton("Cancel", null)
@@ -129,7 +124,7 @@ class CircleScreen : AppCompatActivity() {
                 dialog.show()
             }
 
-            // Edit button click
+            // Edit action
             holder.editIcon.setOnClickListener {
                 val context = holder.itemView.context
                 val editText = EditText(context)
@@ -141,8 +136,11 @@ class CircleScreen : AppCompatActivity() {
                     .setPositiveButton("Save") { _, _ ->
                         val newName = editText.text.toString().trim()
                         if (newName.isNotEmpty()) {
+                            val indexInOriginal = groupNames.indexOf(groupName)
+                            if (indexInOriginal >= 0) groupNames[indexInOriginal] = newName
                             groupList[position] = newName
                             notifyItemChanged(position)
+                            spinnerAdapter.notifyDataSetChanged()
                             Toast.makeText(context, "Group renamed to $newName", Toast.LENGTH_SHORT).show()
                         } else {
                             Toast.makeText(context, "Group name cannot be empty!", Toast.LENGTH_SHORT).show()

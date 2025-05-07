@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.fyp_application.databinding.ActivityRoleScreenBinding
-import com.example.fyp_application.databinding.ActivitySettingScreenBinding
 
 class RoleScreen : AppCompatActivity() {
     private lateinit var binding: ActivityRoleScreenBinding

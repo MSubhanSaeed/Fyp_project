@@ -6,47 +6,83 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CircleScreen">
-    <!-- Back Button -->
-    <ImageView
-        android:id="@+id/btnBack"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="25dp"
-        android:contentDescription="Back"
-        android:src="@drawable/arrowback"
+
+    <!-- Top Map Button Container -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mapButtonContainer1"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/rounded_button"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <!-- Title -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="8dp"
+            android:textColor="@android:color/black"
+            app:backgroundTint="@color/Light_Silver"
+            app:cornerRadius="8dp"
+            app:icon="@drawable/settingmap"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconSize="25dp"
+            app:iconTint="@android:color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:rippleColor="@color/blue"
+            app:strokeColor="@android:color/white"
+            app:strokeWidth="2dp" />
 
-    <TextView
-        android:id="@+id/tvEditProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="4dp"
-        android:text="Circle Screen"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/searchView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <Spinner
+            android:id="@+id/dropDownMenu"
+            android:layout_width="175dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/dropdown_background"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="8dp"
+            android:spinnerMode="dropdown"
+            app:layout_constraintEnd_toStartOf="@id/btnNotification"
+            app:layout_constraintStart_toEndOf="@id/btnSettings"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="8dp"
+            app:cornerRadius="8dp"
+            app:icon="@drawable/notification"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconSize="25dp"
+            app:iconTint="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="46dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="15dp"
         android:queryHint="Search Circle Name"
-        app:layout_constraintBottom_toTopOf="@+id/view3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@id/mapButtonContainer1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/view3" />
 
     <View
         android:id="@+id/view3"
@@ -60,46 +96,44 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/groupNamesRecyclerView"
-        android:layout_width="348dp"
-        android:layout_height="421dp"
+        android:layout_width="343dp"
+        android:layout_height="397dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchView"
-        app:layout_constraintVertical_bias="0.043" />
+        app:layout_constraintVertical_bias="0.298" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/creategrp"
         android:layout_width="156dp"
         android:layout_height="42dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginBottom="42dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/rounded_button"
-
         android:text="Join Circle"
         android:textColor="@color/white"
         android:textSize="13sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavBar"
+        app:layout_constraintTop_toBottomOf="@+id/groupNamesRecyclerView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/locationsListView" />
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavBar" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/addgrp"
         android:layout_width="156dp"
         android:layout_height="42dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="42dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/rounded_button"
         android:text="Create Circle"
         android:textColor="@color/white"
         android:textSize="13sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavBar"
+        app:layout_constraintTop_toBottomOf="@+id/groupNamesRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/locationsListView" />
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavBar" />
 
     <LinearLayout
         android:id="@+id/bottomNavBar"

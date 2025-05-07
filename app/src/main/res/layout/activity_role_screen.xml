@@ -37,7 +37,7 @@
         android:id="@+id/questionText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="What's your role in the Project\n Circle?"
+        android:text="What's your role in the Circle?"
         android:textSize="16sp"
         android:textStyle="bold"
         android:textColor="#173715"
