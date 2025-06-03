@@ -1,38 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
-    android:padding="12dp">
+    android:orientation="vertical"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
 
-    <TextView
-        android:id="@+id/friendName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Friend Name"
-        android:textColor="@android:color/black"
-        android:textSize="16sp" />
-
+    <!-- Row content (profile + name + switch) -->
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingVertical="12dp"
+        android:paddingHorizontal="16dp">
 
-        <TextView
-            android:id="@+id/switchLabel"
+        <!-- Profile Picture -->
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/account"
+            android:scaleType="centerCrop"
+            android:layout_marginEnd="16dp" />
+
+        <!-- Friend Name and Status -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/friendName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Friend Name"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="John Doe" />
+
+            <TextView
+                android:id="@+id/friendStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Last seen 2h ago"
+                android:textColor="#757575"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp"
+                tools:text="Online" />
+        </LinearLayout>
+
+        <!-- Tracking Switch -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Request Tracking"
-            android:textSize="12sp"
-            android:textColor="@android:color/black"
-            android:layout_marginBottom="4dp" />
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingStart="8dp">
 
-        <Switch
-            android:id="@+id/trackingSwitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:showText="false" />
+            <TextView
+                android:id="@+id/switchLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location sharing"
+                android:textSize="12sp"
+                android:textColor="#757575"
+                android:layout_marginBottom="4dp"
+                tools:text="Location sharing" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/trackingSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:thumbTint="@color/white"
+                app:trackTintMode="multiply"
+                app:trackTint="@color/switch_track"
+                app:useMaterialThemeColors="false" />
+        </LinearLayout>
     </LinearLayout>
+
+    <!-- Divider line after each item -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DDDDDD"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="4dp" />
 </LinearLayout>

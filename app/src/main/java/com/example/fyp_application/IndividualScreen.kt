@@ -46,25 +46,25 @@ class IndividualScreen : AppCompatActivity(), OnMapReadyCallback {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         BottomSheetBehavior.from(binding.sheet).apply {
-            peekHeight = 300
+            peekHeight = 500
             this.state = BottomSheetBehavior.STATE_COLLAPSED
         }
 
-        val friendItems = listOf(
-            FriendItem.Friend("Subhan", true),
-            FriendItem.Friend("Ali Haider", false),
-            FriendItem.Friend("Kamran", true),
-            FriendItem.Friend("Aminullah", true),
-            FriendItem.Friend("Saad Haider", false),
-            FriendItem.Friend("Arslan", false),
-            FriendItem.Friend("Hashir", true),
-            FriendItem.Friend("Hadi", false),
-            FriendItem.AddButton
-        )
-
-        val adapter = FriendsAdapter(friendItems)
-        binding.friendsRecyclerView.layoutManager = LinearLayoutManager(this)
-        binding.friendsRecyclerView.adapter = adapter
+//        val friendItems = listOf(
+//            FriendItem.Friend("Subhan", true),
+//            FriendItem.Friend("Ali Haider", false),
+//            FriendItem.Friend("Kamran", true),
+//            FriendItem.Friend("Aminullah", true),
+//            FriendItem.Friend("Saad Haider", false),
+//            FriendItem.Friend("Arslan", false),
+//            FriendItem.Friend("Hashir", true),
+//            FriendItem.Friend("Hadi", false),
+//            FriendItem.AddButton
+//        )
+//
+//        val adapter = FriendsAdapter(friendItems)
+//        binding.friendsRecyclerView.layoutManager = LinearLayoutManager(this)
+//        binding.friendsRecyclerView.adapter = adapter
 
         // Button clicks
         binding.btnHome.setOnClickListener {

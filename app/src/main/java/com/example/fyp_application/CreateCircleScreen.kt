@@ -20,7 +20,7 @@ class CreateCircleScreen : AppCompatActivity() {
         setContentView(binding.root)
 
         // Generate and set the invite code
-        val generatedCode = generateRandomCode()
+        val generatedCode = intent.getStringExtra("Group_Code")
         binding.inviteCodeText.text = generatedCode
 
         // Back arrow click
@@ -54,12 +54,12 @@ class CreateCircleScreen : AppCompatActivity() {
 
     }
 
-    // Helper function
-    private fun generateRandomCode(): String {
-        val chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        val code = (1..6)
-            .map { chars.random() }
-            .joinToString("")
-        return code.chunked(3).joinToString("-") // Example: IAF-QGP
-    }
+//    // Helper function
+//    private fun generateRandomCode(): String {
+//        val chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+//        val code = (1..6)
+//            .map { chars.random() }
+//            .joinToString("")
+//        return code.chunked(3).joinToString("-") // Example: IAF-QGP
+//    }
 }

@@ -153,16 +153,30 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Update Button -->
+
     <Button
         android:id="@+id/btnUpdate"
-        android:layout_width="0dp"
-        android:layout_height="52dp"
+        android:layout_width="308dp"
+        android:layout_height="48dp"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="40dp"
+        android:backgroundTint="@android:color/black"
         android:text="Update"
         android:textColor="@android:color/white"
-        android:backgroundTint="@android:color/black"
-        android:layout_margin="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="308dp"
+        android:layout_height="48dp"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/red"
+        android:text="Delete"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/btnUpdate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

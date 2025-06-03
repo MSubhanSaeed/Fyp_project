@@ -11,19 +11,26 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.example.fyp_application.*
+import androidx.core.content.ContextCompat
 import com.example.fyp_application.databinding.ActivityMainSettingsScreenBinding
 
 class Main_Settings_Screen : AppCompatActivity() {
+
     private lateinit var binding: ActivityMainSettingsScreenBinding
     private val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
 
-    private val enableBluetoothLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (bluetoothAdapter?.isEnabled == true) {
-            Toast.makeText(this, "Bluetooth enabled", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "Bluetooth not enabled", Toast.LENGTH_SHORT).show()
+    private val permissionRequestLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (!isGranted) {
+            Toast.makeText(this, "Bluetooth permission is required", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private val enableBluetoothLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        updateBluetoothSwitch()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +40,11 @@ class Main_Settings_Screen : AppCompatActivity() {
 
         setupNavigation()
         setupBluetoothFunctionality()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateBluetoothSwitch()
     }
 
     private fun setupNavigation() {
@@ -45,7 +57,10 @@ class Main_Settings_Screen : AppCompatActivity() {
         }
 
         binding.logoutContainer.setOnClickListener {
-            startActivity(Intent(this, LoginScreen::class.java))
+            getSharedPreferences("UserPrefs", MODE_PRIVATE).edit().clear().apply()
+            val intent = Intent(this, LoginScreen::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
             finish()
         }
 
@@ -57,55 +72,76 @@ class Main_Settings_Screen : AppCompatActivity() {
     private fun setupBluetoothFunctionality() {
         binding.bluetoothSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (bluetoothAdapter == null) {
-                Toast.makeText(this, "Bluetooth not supported", Toast.LENGTH_SHORT).show()
+                showToast("Bluetooth not supported")
+                binding.bluetoothSwitch.isChecked = false
                 return@setOnCheckedChangeListener
             }
 
             if (isChecked) {
                 if (!bluetoothAdapter.isEnabled) {
-                    val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-                    enableBluetoothLauncher.launch(enableBtIntent)
+                    val enableIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                    enableBluetoothLauncher.launch(enableIntent)
                 }
             } else {
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
+                if (checkBluetoothPermission()) {
                     bluetoothAdapter.disable()
-                    Toast.makeText(this, "Bluetooth turned off", Toast.LENGTH_SHORT).show()
+                    showToast("Bluetooth turned off")
                 } else {
-                    Toast.makeText(this, "Permission required to turn off Bluetooth", Toast.LENGTH_SHORT).show()
+                    requestBluetoothPermission()
                 }
             }
         }
 
         binding.bluetoothBox.setOnClickListener {
             if (bluetoothAdapter == null) {
-                Toast.makeText(this, "Bluetooth not supported", Toast.LENGTH_SHORT).show()
+                showToast("Bluetooth not supported")
                 return@setOnClickListener
             }
 
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Bluetooth permission not granted", Toast.LENGTH_SHORT).show()
+            if (!checkBluetoothPermission()) {
+                requestBluetoothPermission()
                 return@setOnClickListener
             }
 
             if (!bluetoothAdapter.isEnabled) {
-                Toast.makeText(this, "Please enable Bluetooth first", Toast.LENGTH_SHORT).show()
+                showToast("Please enable Bluetooth first")
                 return@setOnClickListener
             }
 
-            val pairedDevices: Set<BluetoothDevice>? = bluetoothAdapter.bondedDevices
+            val pairedDevices = bluetoothAdapter.bondedDevices
             if (!pairedDevices.isNullOrEmpty()) {
                 val deviceNames = pairedDevices.map { "${it.name} (${it.address})" }.toTypedArray()
 
                 AlertDialog.Builder(this)
                     .setTitle("Paired Bluetooth Devices")
                     .setItems(deviceNames) { _, which ->
-                        Toast.makeText(this, "Clicked: ${deviceNames[which]}", Toast.LENGTH_SHORT).show()
+                        showToast("Selected: ${deviceNames[which]}")
                     }
                     .setNegativeButton("Cancel", null)
                     .show()
             } else {
-                Toast.makeText(this, "No paired devices found", Toast.LENGTH_SHORT).show()
+                showToast("No paired devices found")
             }
         }
+    }
+
+    private fun updateBluetoothSwitch() {
+        if (bluetoothAdapter != null && checkBluetoothPermission()) {
+            binding.bluetoothSwitch.isChecked = bluetoothAdapter.isEnabled
+        }
+    }
+
+    private fun checkBluetoothPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this, Manifest.permission.BLUETOOTH_CONNECT
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestBluetoothPermission() {
+        permissionRequestLauncher.launch(Manifest.permission.BLUETOOTH_CONNECT)
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

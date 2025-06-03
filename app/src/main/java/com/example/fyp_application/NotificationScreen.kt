@@ -17,11 +17,11 @@ class NotificationScreen : AppCompatActivity() {
         setContentView(binding.root)
 
         val notifications = listOf(
-            Notification("Subhan", "Shared Location with You", "1m ago", R.drawable.profile_subhan),
-            Notification("Abu Bakar", "Leave Place at Faizabad", "1m ago", R.drawable.profile_abu_bakar),
-            Notification("Subhan", "Arrives at Rehmanabad", "1m ago", R.drawable.profile_subhan),
-            Notification("Dawood", "Leave Place BIIT", "10 Hrs ago", R.drawable.profile_dawood),
-            Notification("Amna", "Arrived at Metro Station,Murree road", "15 Hrs ago", R.drawable.profile_amna)
+            Notification("Subhan", "Shared Location with You", "1m ago", R.drawable.account),
+            Notification("Abu Bakar", "Leave Place at Faizabad", "1m ago", R.drawable.account),
+            Notification("Subhan", "Arrives at Rehmanabad", "1m ago", R.drawable.account),
+            Notification("Dawood", "Leave Place BIIT", "10 Hrs ago", R.drawable.account),
+            Notification("Amna", "Arrived at Metro Station,Murree road", "15 Hrs ago", R.drawable.account)
         )
 
         val adapter = NotificationAdapter(notifications)

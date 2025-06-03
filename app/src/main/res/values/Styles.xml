@@ -9,6 +9,5 @@
         <item name="android:inputType">text</item>
         <item name="android:maxLength">1</item>
         <item name="android:textSize">18sp</item>
-    </style>
-
+        </style>
 </resources>

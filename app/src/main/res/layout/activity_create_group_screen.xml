@@ -102,7 +102,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="30dp">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/publicButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
             android:layout_width="10dp"
             android:layout_height="wrap_content" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/privateButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -134,7 +134,6 @@
         android:backgroundTint="#0F6D4D"
         android:textColor="#ffffff"
         android:textStyle="bold"
-        android:enabled="false"
         app:layout_constraintTop_toBottomOf="@id/privacyContainer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

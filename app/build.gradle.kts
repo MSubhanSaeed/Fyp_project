@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.androidx.activity)
 
     implementation ("com.google.android.libraries.places:places:3.1.0")
+    implementation(libs.androidx.core.i18n)
 
     // Testing
     testImplementation("junit:junit:4.13.2")

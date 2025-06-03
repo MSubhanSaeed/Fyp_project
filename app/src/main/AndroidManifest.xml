@@ -4,7 +4,6 @@
     <!-- Required Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
@@ -14,7 +13,8 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
-        android:allowBackup="true"
+        android:usesCleartextTraffic="true"
+    android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -58,7 +58,7 @@
             android:name=".CreateCircleScreen"
             android:exported="false" />
         <activity
-            android:name=".CircleScreen"
+            android:name=".LoginScreen"
             android:exported="false" />
         <activity
             android:name=".PlacesScreen"
@@ -67,10 +67,10 @@
             android:name=".IndividualScreen"
             android:exported="false" />
         <activity
-            android:name=".GetStarted"
+            android:name=".HomeScreen"
             android:exported="false" />
         <activity
-            android:name=".LoginScreen"
+            android:name=".CircleScreen"
             android:exported="false" />
         <activity
             android:name=".GeofenceScreen"
@@ -79,8 +79,9 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".HomeScreen"
-            android:exported="true">
+            android:name=".GetStarted"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

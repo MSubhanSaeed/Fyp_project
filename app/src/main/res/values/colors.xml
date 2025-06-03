@@ -15,4 +15,7 @@
     <color name="Light_Silver">#E0DDDD</color>
     <color name="Tranparent_color">#00E0DDDD</color>
     <color name="white">#FBFBFB</color>
+    <color name="light_grey">#E0E0E0</color>
+    <color name="switch_track">#E0E0E0</color>
+    <color name="switch_track_active">#BBDEFB</color>
 </resources>
