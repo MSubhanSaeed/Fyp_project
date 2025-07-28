@@ -1,42 +1,50 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="12dp">
 
+    <!-- Group Name Text -->
     <TextView
         android:id="@+id/groupNameText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Group Name"
+        android:textColor="@android:color/black"
         android:textSize="18sp"
-        android:maxLines="1"
         android:ellipsize="end"
-        android:layout_marginEnd="8dp"
+        android:maxLines="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/groupIcon"
+        app:layout_constraintEnd_toStartOf="@id/editIcon"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+        tools:text="Family Circle" />
 
+    <!-- Edit (Pencil) Icon -->
     <ImageView
-        android:id="@+id/groupIcon"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginEnd="12dp"
-        android:contentDescription="Delete Icon"
-        android:src="@drawable/delete"
-        app:layout_constraintEnd_toStartOf="@id/EditIcon"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-    <ImageView
-        android:id="@+id/EditIcon"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:contentDescription="Edit Icon"
+        android:id="@+id/editIcon"
+        android:layout_width="36dp"
+        android:layout_height="30dp"
+        android:contentDescription="Edit"
+        android:padding="4dp"
         android:src="@drawable/pencil"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/deleteIcon"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="8dp" />
+
+    <!-- Delete Icon -->
+    <ImageView
+        android:id="@+id/deleteIcon"
+        android:layout_width="36dp"
+        android:layout_height="30dp"
+        android:contentDescription="Delete"
+        android:padding="4dp"
+        android:src="@drawable/delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

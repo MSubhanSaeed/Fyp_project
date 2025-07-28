@@ -1,44 +1,69 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="12dp"
-    android:orientation="horizontal"
-    android:gravity="center_vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="12dp">
 
+    <!-- Profile Image -->
     <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/profileImage"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:src="@drawable/account"
         android:scaleType="centerCrop"
-        android:layout_marginEnd="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
+    <!-- Friend Name -->
     <TextView
         android:id="@+id/friendName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:text="Friend Name"
         android:textSize="16sp"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toEndOf="@id/profileImage"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/switchGroup"
+        android:layout_marginStart="12dp"
+        android:ellipsize="end"
+        android:maxLines="1" />
 
+    <!-- Switch Group (Allow / Leave) -->
     <LinearLayout
+        android:id="@+id/switchGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <Switch
             android:id="@+id/arrive"
-            android:text="Allow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Arrive"
             android:showText="false" />
+
         <Switch
             android:id="@+id/leave"
-            android:text="Leave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Leave"
             android:showText="false" />
     </LinearLayout>
 
-</LinearLayout>
+    <!-- Bottom Divider -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="#DDDDDD"
+        app:layout_constraintTop_toBottomOf="@id/profileImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

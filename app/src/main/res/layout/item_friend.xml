@@ -43,15 +43,6 @@
                 android:textStyle="bold"
                 tools:text="John Doe" />
 
-            <TextView
-                android:id="@+id/friendStatus"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Last seen 2h ago"
-                android:textColor="#757575"
-                android:textSize="12sp"
-                android:layout_marginTop="2dp"
-                tools:text="Online" />
         </LinearLayout>
 
         <!-- Tracking Switch -->

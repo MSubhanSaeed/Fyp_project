@@ -5,16 +5,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-
-    <!-- Bluetooth Permissions -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" /> <!-- Bluetooth Permissions -->
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
-        android:usesCleartextTraffic="true"
-    android:allowBackup="true"
+        android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -23,7 +20,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Fyp_Application"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".IndividualGeofence"
+            android:exported="false" />
+        <activity
+            android:name=".UserTripActivity"
+            android:parentActivityName=".HomeScreen">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen" />
+        </activity>
+        <activity
+            android:name=".LocationHistory"
+            android:exported="false" />
+        <activity
+            android:name=".AddFriend"
+            android:exported="false" />
+        <activity
+            android:name="com.AddFriend"
+            android:exported="false" />
         <activity
             android:name=".Main_Settings_Screen"
             android:exported="false" />
@@ -35,6 +52,9 @@
             android:exported="false" />
         <activity
             android:name=".RequestLocation_profile"
+            android:exported="false" />
+        <activity
+            android:name=".JoinCircleScreen"
             android:exported="false" />
         <activity
             android:name=".RoleScreen"
@@ -52,10 +72,7 @@
             android:name=".CreateGroupScreen"
             android:exported="false" />
         <activity
-            android:name=".JoinCircleScreen"
-            android:exported="false" />
-        <activity
-            android:name=".CreateCircleScreen"
+            android:name=".InvitecodeScreen"
             android:exported="false" />
         <activity
             android:name=".LoginScreen"

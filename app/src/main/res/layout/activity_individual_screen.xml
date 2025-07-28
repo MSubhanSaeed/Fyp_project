@@ -10,20 +10,26 @@
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <!-- Bottom Navigation Bar -->
+        android:layout_width="409dp"
+        android:layout_height="580dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <!-- Bottom Sheet Container -->
         <FrameLayout
             android:id="@+id/sheet"
             android:layout_width="match_parent"
-            android:layout_height="600dp"
+            android:layout_height="486dp"
             android:background="@drawable/rounded"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
@@ -38,63 +44,63 @@
                     android:id="@+id/dragHandle"
                     android:layout_width="116dp"
                     android:layout_height="32dp"
+                    android:layout_marginBottom="8dp"
                     android:src="@drawable/remove"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginBottom="8dp" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <!-- "Friends in Circle" Title -->
                 <TextView
                     android:id="@+id/friendsInCircleTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Individual Friends"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="12dp"
+                    android:text="People"
                     android:textColor="@android:color/black"
                     android:textSize="17sp"
                     android:textStyle="bold"
-                    app:layout_constraintTop_toBottomOf="@id/dragHandle"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="12dp" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dragHandle" />
 
                 <!-- "Me" Section -->
                 <LinearLayout
                     android:id="@+id/meSection"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp"
                     android:gravity="center_vertical"
-                    app:layout_constraintTop_toBottomOf="@id/friendsInCircleTitle"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginBottom="12dp">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/friendsInCircleTitle">
 
                     <TextView
                         android:id="@+id/Myself"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="30sp"
                         android:layout_weight="1"
                         android:text="Me"
-                        android:layout_marginLeft="30sp"
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal">
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/MyswitchLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
                             android:text="Allow Tracking"
                             android:textColor="@android:color/black"
-                            android:textSize="12sp"
-                            android:layout_marginBottom="4dp" />
+                            android:textSize="12sp" />
 
                         <Switch
                             android:id="@+id/Meswitch"
@@ -109,136 +115,55 @@
                     android:id="@+id/divider"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
+                    android:layout_marginBottom="12dp"
                     android:background="#dddddd"
-                    app:layout_constraintTop_toBottomOf="@id/meSection"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginBottom="12dp" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/meSection" />
 
-                <!-- RecyclerView for Friends List -->
+                <!-- RecyclerView -->
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/friendsRecyclerView"
-                    android:layout_width="319dp"
-                    android:layout_height="285dp"
-                    android:layout_marginTop="8dp"
+                    android:id="@+id/indfriendsRecyclerView"
+                    android:layout_width="306dp"
+                    android:layout_height="209dp"
+                    android:layout_marginTop="6dp"
                     android:clipToPadding="false"
                     android:padding="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/divider" />
+                    app:layout_constraintTop_toBottomOf="@+id/meSection" />
+
+                <!-- Add Friend Button -->
+                <Button
+                    android:id="@+id/btnAddFriend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="16dp"
+                    android:backgroundTint="#0F6D4D"
+                    android:text="Add Friend"
+                    android:textColor="@android:color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/indfriendsRecyclerView" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </FrameLayout>
 
+        <!-- Bottom Navigation -->
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@android:color/white"
+            app:itemIconTint="@color/black"
+            app:itemTextColor="@color/black"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/bottom_nav_menu" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-
-
-    <LinearLayout
-        android:id="@+id/bottomNavBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:background="@android:color/white"
-        android:backgroundTint="@color/Light_Silver"
-        android:elevation="8sp"
-        android:orientation="horizontal"
-        android:padding="8sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <!-- Home Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnHome"
-            android:layout_width="0sp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@android:color/transparent"
-            android:gravity="center"
-            android:insetTop="0sp"
-            android:insetBottom="0sp"
-            android:singleLine="true"
-            android:textColor="@android:color/black"
-            app:cornerRadius="0sp"
-            app:icon="@drawable/home"
-            app:iconGravity="top"
-            app:iconPadding="4sp"
-            app:iconTint="@color/black" />
-
-        <!-- Individual Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnIndividual"
-            android:layout_width="0sp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@android:color/transparent"
-            android:gravity="center"
-            android:insetTop="0sp"
-            android:insetBottom="0sp"
-            android:singleLine="true"
-            android:textColor="@android:color/black"
-            app:cornerRadius="0sp"
-            app:icon="@drawable/person"
-            app:iconGravity="top"
-            app:iconPadding="4sp"
-            app:iconTint="@color/black" />
-
-        <!-- Places Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnPlaces"
-            android:layout_width="0sp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@android:color/transparent"
-            android:gravity="center"
-            android:insetTop="0sp"
-            android:insetBottom="0sp"
-            android:singleLine="true"
-            android:textColor="@android:color/black"
-            app:cornerRadius="0sp"
-            app:icon="@drawable/marker"
-            app:iconGravity="top"
-            app:iconPadding="4sp"
-            app:iconTint="@color/black" />
-
-        <!-- Circle Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnCircle"
-            android:layout_width="0sp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@android:color/transparent"
-            android:gravity="center"
-            android:insetTop="0sp"
-            android:insetBottom="0sp"
-            android:singleLine="true"
-            android:textColor="@android:color/black"
-            app:cornerRadius="0sp"
-            app:icon="@drawable/circles"
-            app:iconGravity="top"
-            app:iconPadding="4sp"
-            app:iconTint="@color/black" />
-
-        <!-- Account Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnAccount"
-            android:layout_width="0sp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@android:color/transparent"
-            android:gravity="center"
-            android:insetTop="0sp"
-            android:insetBottom="0sp"
-            android:singleLine="true"
-            android:textColor="@android:color/black"
-            app:cornerRadius="0sp"
-            app:icon="@drawable/account"
-            app:iconGravity="top"
-            app:iconPadding="4sp"
-            app:iconTint="@color/black" />
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,4 +2,6 @@
 <resources>
     <dimen name="margin_large">16dp</dimen>
     <dimen name="text_size_heading">18sp</dimen>
+    <dimen name="marker_size">48dp</dimen>
+
 </resources>

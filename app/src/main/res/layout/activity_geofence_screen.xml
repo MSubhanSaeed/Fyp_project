@@ -17,31 +17,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/editPlaceTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Edit Place"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/backArrow"
-        app:layout_constraintTop_toTopOf="@id/backArrow"
-        app:layout_constraintBottom_toBottomOf="@id/backArrow"
-        app:layout_constraintEnd_toStartOf="@id/saveButton"
-        app:layout_constraintHorizontal_bias="0.5" />
 
-    <TextView
-        android:id="@+id/saveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Save"
-        android:textColor="@color/purple_500"
-        android:textStyle="bold"
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/dropDownMenu"
+        android:layout_width="237dp"
+        android:layout_height="55dp"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginStart="46dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="84dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:paddingLeft="65dp"
+        android:popupBackground="@android:color/white"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toTopOf="@+id/map"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/backArrow"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintVertical_bias="1.0" />
 
-    <!-- Map -->
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -58,7 +52,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:max="1000"
-        android:progress="500"
+        android:progress="1"
         app:layout_constraintTop_toBottomOf="@id/map"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,28 +60,24 @@
 
     <TextView
         android:id="@+id/radiusLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="121dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="3dp"
         android:text="500 meter Radius"
+        android:textAlignment="center"
         android:textSize="12sp"
-        app:layout_constraintTop_toBottomOf="@id/radiusSeekBar"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="4dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radiusSeekBar" />
 
-    <!-- Place Details Section -->
 
-    <!-- Notification Section -->
-
-    <!-- Delete Place Button -->
 
     <LinearLayout
         android:id="@+id/placeDetailsSection"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_width="407dp"
+        android:layout_height="80dp"
         android:orientation="vertical"
-        android:padding="8dp"
+        android:padding="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -95,19 +85,19 @@
 
         <TextView
             android:id="@+id/placeDetailsLabel"
-            android:layout_width="428dp"
-            android:layout_height="33dp"
+            android:layout_width="402dp"
+            android:layout_height="25dp"
             android:layout_marginStart="0dp"
             android:background="@color/Light_Silver"
             android:padding="4dp"
             android:paddingStart="8dp"
-            android:text="Place Name"
+            android:text="Geofence Name"
             android:textStyle="bold" />
 
         <AutoCompleteTextView
             android:id="@+id/placeName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginTop="8dp"
             android:completionThreshold="1"
             android:hint="Location name"
@@ -118,9 +108,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/notificationSections"
-        android:layout_width="402dp"
-        android:layout_height="139dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="411dp"
+        android:layout_height="174dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/saveButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -128,10 +119,9 @@
 
         <TextView
             android:id="@+id/notifyLabel"
-            android:layout_width="428dp"
-            android:layout_height="33dp"
+            android:layout_width="402dp"
+            android:layout_height="29dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="0dp"
             android:background="@color/Light_Silver"
             android:padding="4dp"
             android:text="Get notified when..."
@@ -141,33 +131,36 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/GeofriendsRecyclerView"
-            android:layout_width="339dp"
-            android:layout_height="74dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="31dp"
-            android:layout_marginBottom="32dp"
+            android:layout_width="347dp"
+            android:layout_height="123dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="5dp"
             android:clipToPadding="false"
             android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/notifyLabel" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/deletePlaceBtn"
+        android:id="@+id/saveButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="56dp"
-        android:background="@drawable/rounded_buttonstop"
-        android:backgroundTint="@android:color/holo_red_light"
-        android:text="Delete Place"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/rounded_button"
+        android:text="Save Place"
         android:textColor="@android:color/white"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notificationSections" />
 

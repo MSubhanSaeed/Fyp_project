@@ -2,9 +2,6 @@ package com.example.fyp_application
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.fyp_application.databinding.ActivityCreateCircleScreenBinding
 import com.example.fyp_application.databinding.ActivityStopLocationProfileBinding
 
 class StopLocation_Profile : AppCompatActivity() {

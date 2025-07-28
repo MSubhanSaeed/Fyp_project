@@ -3,9 +3,7 @@ package com.example.fyp_application
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -17,18 +15,29 @@ import androidx.core.view.WindowCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fyp_application.databinding.ActivityPlacesScreenBinding
+import com.example.fyp_application.dto.IndividualLiveLocationEntity
+import com.example.fyp_application.dto.UserGeofence
+import com.example.fyp_application.dto.UserLiveLocationEntity
+import com.example.fyp_application.network.RetrofitClient
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import kotlin.collections.set
 
 class PlacesScreen : AppCompatActivity() {
+
     private lateinit var binding: ActivityPlacesScreenBinding
-    private lateinit var groupAdapter: GroupAdapter
+    private lateinit var placeAdapter: PlaceAdapter
 
-    private val placesNames = mutableListOf(
-        "Karachi", "Lahore", "Islamabad", "Rawalpindi", "Peshawar",
-        "Quetta", "Faisalabad", "Multan", "Sialkot", "Gujranwala",
-        "Bahawalpur", "Sargodha", "Murree", "Hunza", "Skardu"
-    )
+    companion object {
+        /** master list of geofences (id + name) */
+        val allGeofences = mutableListOf<UserGeofence>()
+    }
+    private val filteredGeofences = allGeofences.toMutableList()
 
-    private var filteredGroupNames = placesNames.toMutableList()
+    // ─────────────────────────────────────────────────────────────────────────
 
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,36 +47,44 @@ class PlacesScreen : AppCompatActivity() {
         binding = ActivityPlacesScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnHome.setOnClickListener {
-            startActivity(Intent(this, HomeScreen::class.java))
-        }
+        setupNav()
+        setupRecycler()
+        setupSearch()
+        fetchGeofencesFromApi()
 
-        binding.btnIndividual.setOnClickListener {
-            startActivity(Intent(this, IndividualScreen::class.java))
-        }
+    }
 
-        binding.btnCircle.setOnClickListener {
-            startActivity(Intent(this, CircleScreen::class.java))
-        }
+    // ───────────────── Nav / UI helpers ─────────────────────────────────────
 
-        binding.btnAccount.setOnClickListener {
-            startActivity(Intent(this, AccountScreen::class.java))
+    private fun setupNav() {
+        binding.bottomNavigation.selectedItemId = R.id.btnPlaces
+        binding.bottomNavigation.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.btnIndividual -> startActivity(Intent(this, IndividualScreen::class.java))
+                R.id.btnHome       -> startActivity(Intent(this, HomeScreen::class.java))
+                R.id.btnCircle     -> startActivity(Intent(this, CircleScreen::class.java))
+                R.id.btnAccount    -> startActivity(Intent(this, AccountScreen::class.java))
+            }; true
         }
-
+        binding.btnNotification.setOnClickListener {
+            startActivity(Intent(this, NotificationScreen::class.java))
+        }
         binding.Addgeofence.setOnClickListener {
             startActivity(Intent(this, GeofenceScreen::class.java))
         }
+    }
 
+    private fun setupRecycler() {
+        placeAdapter = PlaceAdapter(filteredGeofences)
+        binding.placesNamesRecyclerView.apply {
+            layoutManager = LinearLayoutManager(this@PlacesScreen)
+            adapter = placeAdapter
+        }
+    }
 
-        groupAdapter = GroupAdapter(filteredGroupNames)
-        binding.groupNamesRecyclerView.layoutManager = LinearLayoutManager(this)
-        binding.groupNamesRecyclerView.adapter = groupAdapter
-
+    private fun setupSearch() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
-
+            override fun onQueryTextSubmit(q: String?) = false
             override fun onQueryTextChange(newText: String?): Boolean {
                 filterList(newText)
                 return true
@@ -75,96 +92,125 @@ class PlacesScreen : AppCompatActivity() {
         })
     }
 
-    private fun filterList(query: String?) {
-        filteredGroupNames.clear()
-        if (query.isNullOrEmpty()) {
-            filteredGroupNames.addAll(placesNames)
-        } else {
-            val lowerCaseQuery = query.lowercase()
-            placesNames.forEach { group ->
-                if (group.lowercase().contains(lowerCaseQuery)) {
-                    filteredGroupNames.add(group)
+
+    // ───────────────── Data fetch ───────────────────────────────────────────
+
+    private fun fetchGeofencesFromApi() {
+        val userId = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+            .getInt("userid", -1)
+
+        RetrofitClient.getInstance().getUserApiService()
+            .getGeofencesByUser(userId)
+            .enqueue(object : Callback<List<UserGeofence>> {
+                override fun onResponse(
+                    call: Call<List<UserGeofence>>,
+                    resp: Response<List<UserGeofence>>
+                ) {
+                    if (resp.isSuccessful) {
+                        allGeofences.apply {
+                            clear()
+                            addAll(resp.body().orEmpty())
+                        }
+                        filterList(binding.searchView.query?.toString())
+                    } else
+                        Toast.makeText(this@PlacesScreen, "Failed to fetch places", Toast.LENGTH_SHORT).show()
                 }
-            }
-        }
-        groupAdapter.notifyDataSetChanged()
+
+                override fun onFailure(call: Call<List<UserGeofence>>, t: Throwable) {
+                    Toast.makeText(this@PlacesScreen, "Error: ${t.message}", Toast.LENGTH_LONG).show()
+                }
+            })
     }
 
-    class GroupAdapter(private val groupList: MutableList<String>) :
-        RecyclerView.Adapter<GroupAdapter.GroupViewHolder>() {
+ // ───────────────── Filter helper ────────────────────────────────────────
 
-        inner class GroupViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            val groupNameText: TextView = itemView.findViewById(R.id.groupNameText)
-            val groupIcon: ImageView = itemView.findViewById(R.id.groupIcon)
-            val editIcon: ImageView = itemView.findViewById(R.id.EditIcon)
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_group, parent, false)
-            return GroupViewHolder(view)
-        }
-
-        override fun onBindViewHolder(holder: GroupViewHolder, position: Int) {
-            val groupName = groupList[position]
-
-            holder.groupNameText.text = groupName
-
-            // Delete functionality
-            holder.groupIcon.setOnClickListener {
-                val dialog = AlertDialog.Builder(holder.itemView.context)
-                    .setMessage("Are you sure you want to delete $groupName?")
-                    .setPositiveButton("OK") { _, _ ->
-                        groupList.removeAt(position)
-                        notifyItemRemoved(position)
-                        notifyItemRangeChanged(position, groupList.size)
-                        Toast.makeText(
-                            holder.itemView.context,
-                            "$groupName has been deleted",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                    .setNegativeButton("Cancel", null)
-                    .create()
-
-                dialog.show()
+    private fun filterList(query: String?) {
+        filteredGeofences.run {
+            clear()
+            if (query.isNullOrBlank()) addAll(allGeofences)
+            else {
+                val q = query.lowercase()
+                addAll(allGeofences.filter { it.Name.lowercase().contains(q) })
             }
+        }
+        placeAdapter.notifyDataSetChanged()
+    }
 
-            // Edit functionality
-            holder.editIcon.setOnClickListener {
-                val context = holder.itemView.context
+    // ───────────────── Adapter ──────────────────────────────────────────────
 
-                val editText = EditText(context)
-                editText.setText(groupName)
+    inner class PlaceAdapter(private val items: MutableList<UserGeofence>) :
+        RecyclerView.Adapter<PlaceAdapter.VH>() {
 
-                val dialog = AlertDialog.Builder(context)
-                    .setTitle("Edit Group Name")
-                    .setView(editText)
-                    .setPositiveButton("Save") { _, _ ->
-                        val newGroupName = editText.text.toString()
-                        if (newGroupName.isNotEmpty()) {
-                            groupList[position] = newGroupName
-                            notifyItemChanged(position)
-                            Toast.makeText(
-                                context,
-                                "Group name updated to $newGroupName",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        } else {
-                            Toast.makeText(
-                                context,
-                                "Group name cannot be empty",
-                                Toast.LENGTH_SHORT
-                            ).show()
+        inner class VH(v: View) : RecyclerView.ViewHolder(v) {
+            val name: TextView  = v.findViewById(R.id.placeNameText)
+            val edit: ImageView = v.findViewById(R.id.editIcon)
+            val del : ImageView = v.findViewById(R.id.deleteIcon)
+        }
+
+        override fun onCreateViewHolder(p: ViewGroup, vt: Int) =
+            VH(LayoutInflater.from(p.context).inflate(R.layout.item_places, p, false))
+
+        override fun getItemCount() = items.size
+
+        override fun onBindViewHolder(h: VH, pos: Int) {
+            val geo = items[pos]
+            h.name.text = geo.Name
+            h.edit.setOnClickListener { showEditDialog(pos) }
+            h.del .setOnClickListener { showDeleteDialog(pos) }
+        }
+
+        // ───── Edit ─────
+        private fun showEditDialog(index: Int) {
+            val ctx = this@PlacesScreen
+            val edit = EditText(ctx).apply { setText(items[index].Name) }
+
+            AlertDialog.Builder(ctx)
+                .setTitle("Edit Place Name")
+                .setView(edit)
+                .setPositiveButton("Save") { _, _ ->
+                    val newName = edit.text.toString().trim()
+                    if (newName.isNotEmpty()) {
+                        // update both filtered + master list
+                        items[index] = items[index].copy(Name = newName)
+                        val masterPos = allGeofences.indexOfFirst { it.GroupId == items[index].GroupId }
+                        if (masterPos >= 0) allGeofences[masterPos] = items[index]
+                        notifyItemChanged(index)
+                        Toast.makeText(ctx, "Renamed to \"$newName\"", Toast.LENGTH_SHORT).show()
+                    } else Toast.makeText(ctx, "Name cannot be empty", Toast.LENGTH_SHORT).show()
+                }
+                .setNegativeButton("Cancel", null)
+                .show()
+        }
+
+        // ───── Delete ─────
+        private fun showDeleteDialog(index: Int) {
+            val ctx   = this@PlacesScreen
+            val geo   = items[index]
+            val api   = RetrofitClient.getInstance().getUserApiService()
+
+            AlertDialog.Builder(ctx)
+                .setMessage("Delete \"${geo.Name}\"?")
+                .setPositiveButton("Delete") { _, _ ->
+                    api.DeleteGeofence(geo.Id).enqueue(object : Callback<Void> {
+                        override fun onResponse(call: Call<Void>, resp: Response<Void>) {
+                            if (resp.isSuccessful) {
+                                // remove from both lists
+                                val masterPos = allGeofences.indexOfFirst { it.Id == geo.Id }
+                                if (masterPos >= 0) allGeofences.removeAt(masterPos)
+                                items.removeAt(index)
+                                notifyItemRemoved(index)
+                                Toast.makeText(ctx, "\"${geo.Name}\" deleted", Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(ctx, "Failed to delete (HTTP ${resp.code()})", Toast.LENGTH_LONG).show()
+                            }
                         }
-                    }
-                    .setNegativeButton("Cancel", null)
-                    .create()
-
-                dialog.show()
-            }
+                        override fun onFailure(call: Call<Void>, t: Throwable) {
+                            Toast.makeText(ctx, "Error: ${t.localizedMessage}", Toast.LENGTH_LONG).show()
+                        }
+                    })
+                }
+                .setNegativeButton("Cancel", null)
+                .show()
         }
-
-        override fun getItemCount(): Int = groupList.size
     }
 }

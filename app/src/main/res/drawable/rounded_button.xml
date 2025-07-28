@@ -1,11 +1,20 @@
-<!-- res/drawable/rounded_button.xml -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#0F6D4D" /> <!-- Button background color -->
-    <corners android:radius="16dp" /> <!-- Corner radius -->
-    <padding
-        android:left="8dp"
-        android:top="8dp"
-        android:right="8dp"
-        android:bottom="8dp" /> <!-- Padding inside the button -->
-</shape>
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
 
+<!-- Disabled state -->
+<item android:state_enabled="false">
+    <shape android:shape="rectangle">
+        <solid android:color="#FFCCCCCC" />
+        <corners android:radius="12dp" />
+    </shape>
+</item>
+
+<!-- Enabled state -->
+<item android:state_enabled="true">
+    <shape android:shape="rectangle">
+        <solid android:color="#0F6D4D" />
+        <corners android:radius="12dp" />
+    </shape>
+</item>
+
+</selector>

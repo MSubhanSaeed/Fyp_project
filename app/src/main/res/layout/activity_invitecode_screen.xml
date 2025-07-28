@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
-    tools:context=".JoinCircleScreen">
+    tools:context=".InvitecodeScreen">
 
     <!-- Back Arrow Section -->
 
@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:text="IAF-QGP"
             android:textSize="24sp"
-            android:textColor="#8A3FFF"
+            android:textColor="#0F6D4D"
             android:textStyle="bold"
             android:layout_gravity="center_horizontal" />
 
@@ -110,17 +110,21 @@
     </LinearLayout>
 
     <!-- Send Code Button -->
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/sendCodeButton"
         android:layout_width="0dp"
         android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/rounded_button"
         android:text="Send Code"
-        android:textAllCaps="false"
-        android:backgroundTint="#8A3FFF"
-        android:textColor="#FFFFFF"
-        android:layout_marginHorizontal="16dp"
+        android:textColor="@color/white"
+        android:textSize="17sp"
         app:layout_constraintTop_toBottomOf="@id/codeContainer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

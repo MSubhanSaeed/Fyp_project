@@ -1,9 +1,11 @@
-<!-- res/layout/activity_notification_screen.xml -->
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <!-- Top Bar -->
     <LinearLayout
@@ -24,24 +26,98 @@
             android:id="@+id/notificationTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Notification"
+            android:text="Notifications"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginStart="16dp"/>
+            android:layout_marginStart="16dp" />
     </LinearLayout>
 
-    <!-- General Tab -->
-    <TextView
-        android:layout_width="match_parent"
+    <!-- Progress Bar -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="General"
-        android:padding="12dp"
-        android:background="#EEEEEE"
-        android:textStyle="bold"/>
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
-    <!-- RecyclerView for notifications -->
+    <!-- Empty View -->
+    <LinearLayout
+        android:id="@+id/emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        android:padding="40dp">
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_notifications_off"
+            app:tint="#ccc" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No notifications yet"
+            android:textSize="16sp"
+            android:textColor="#999"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You'll see your notifications here when you receive them"
+            android:textSize="14sp"
+            android:textColor="#ccc"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:textAlignment="center"/>
+    </LinearLayout>
+
+    <!-- Error View -->
+    <LinearLayout
+        android:id="@+id/errorView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        android:padding="40dp">
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_error"
+            app:tint="#ff4444" />
+
+        <TextView
+            android:id="@+id/errorText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Error loading notifications"
+            android:textSize="16sp"
+            android:textColor="#ff4444"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:textAlignment="center"/>
+
+        <Button
+            android:id="@+id/retryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Retry"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#007AFF"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notificationRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp"/>
 </LinearLayout>

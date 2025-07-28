@@ -17,15 +17,12 @@ public class UserEntity {
     @SerializedName("Password")
     private String password;
 
-    @SerializedName("CreatedAt")
-    private String createdAt;
 
-    public UserEntity(int userId, String name, String email, String password, String createdAt) {
+    public UserEntity(int userId, String name, String email, String password) {
         this.userId = userId;
         this.name = name;
         this.email = email;
         this.password = password;
-        this.createdAt = createdAt;
         uId=userId;
     }
 
@@ -46,10 +43,6 @@ public class UserEntity {
         return password;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
     // Setters
     public void setUserId(int userId) {
         this.userId = userId;
@@ -67,7 +60,4 @@ public class UserEntity {
         this.password = password;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
 }

@@ -18,4 +18,14 @@
     <color name="light_grey">#E0E0E0</color>
     <color name="switch_track">#E0E0E0</color>
     <color name="switch_track_active">#BBDEFB</color>
+    <color name="gray">#DADADA</color>
+
+    <!-- res/values/colors.xml -->
+    <color name="markerRed">#EF5350</color>
+    <color name="markerGreen">#66BB6A</color>
+    <color name="markerBlue">#42A5F5</color>
+    <color name="markerOrange">#FFA726</color>
+    <color name="markerPurple">#AB47BC</color>
+
+
 </resources>

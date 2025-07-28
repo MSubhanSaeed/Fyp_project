@@ -1,4 +1,5 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -6,77 +7,26 @@
     android:layout_height="match_parent"
     tools:context=".HomeScreen">
 
-    <!-- Google Map Background -->
+    <!-- Google Map Fragment -->
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="580dp" />
 
-    <!-- Top Map Button Container -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/mapButtonContainer1"
-        android:layout_width="match_parent"
-        android:layout_height="62sp"
-        android:layout_margin="16sp"
-        android:background="@drawable/rounded_button"
-        app:layout_constraintTop_toTopOf="parent">
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/dropDownMenu"
+        android:layout_width="245dp"
+        android:layout_height="60dp"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="50dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:paddingLeft="65dp"
+        android:popupBackground="@android:color/white"
+        android:spinnerMode="dropdown"
+        />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSettings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@android:color/transparent"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="8dp"
-            android:textColor="@android:color/black"
-            app:backgroundTint="@color/Light_Silver"
-            app:cornerRadius="8dp"
-            app:icon="@drawable/setting"
-            app:iconGravity="textStart"
-            app:iconPadding="8dp"
-            app:iconSize="25dp"
-            app:iconTint="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:rippleColor="@color/blue"
-            app:strokeColor="@android:color/white"
-            app:strokeWidth="2dp" />
 
-        <Spinner
-            android:id="@+id/dropDownMenu"
-            android:layout_width="175dp"
-            android:layout_height="54dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/dropdown_background"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="8dp"
-            android:spinnerMode="dropdown"
-            app:layout_constraintEnd_toStartOf="@id/btnNotification"
-            app:layout_constraintStart_toEndOf="@id/btnSettings"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnNotification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@android:color/transparent"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="8dp"
-            app:cornerRadius="8dp"
-            app:icon="@drawable/notification"
-            app:iconGravity="textStart"
-            app:iconPadding="8dp"
-            app:iconSize="25dp"
-            app:iconTint="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- Bottom Navigation Bar -->
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -86,14 +36,14 @@
         <FrameLayout
             android:id="@+id/sheet"
             android:layout_width="match_parent"
-            android:layout_height="600dp"
+            android:layout_height="484dp"
             android:background="@drawable/rounded"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
             <!-- Contents inside the Bottom Sheet -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="430dp"
+                android:layout_height="match_parent"
                 android:padding="16dp">
 
                 <!-- Top Drag Handle Image -->
@@ -138,9 +88,9 @@
                         android:id="@+id/Myself"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="30sp"
                         android:layout_weight="1"
                         android:text="Me"
-                        android:layout_marginLeft="30sp"
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
 
@@ -181,8 +131,8 @@
                 <!-- RecyclerView for Friends List -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/friendsRecyclerView"
-                    android:layout_width="319dp"
-                    android:layout_height="285dp"
+                    android:layout_width="333dp"
+                    android:layout_height="255dp"
                     android:layout_marginTop="8dp"
                     android:clipToPadding="false"
                     android:padding="8dp"
@@ -194,113 +144,16 @@
 
         </FrameLayout>
 
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-
-    <LinearLayout
-        android:id="@+id/bottomNavBar"
+        <!-- Bottom Navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
+        android:layout_gravity="bottom"
         android:background="@android:color/white"
-        android:backgroundTint="@color/Light_Silver"
-        android:elevation="8sp"
-        android:orientation="horizontal"
-        android:padding="8sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <!-- Home Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnHome"
-            android:layout_width="0sp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@android:color/transparent"
-            android:gravity="center"
-            android:insetTop="0sp"
-            android:insetBottom="0sp"
-            android:singleLine="true"
-            android:textColor="@android:color/black"
-            app:cornerRadius="0sp"
-            app:icon="@drawable/home"
-            app:iconGravity="top"
-            app:iconPadding="4sp"
-            app:iconTint="@color/black" />
-
-        <!-- Individual Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnIndividual"
-            android:layout_width="0sp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@android:color/transparent"
-            android:gravity="center"
-            android:insetTop="0sp"
-            android:insetBottom="0sp"
-            android:singleLine="true"
-            android:textColor="@android:color/black"
-            app:cornerRadius="0sp"
-            app:icon="@drawable/person"
-            app:iconGravity="top"
-            app:iconPadding="4sp"
-            app:iconTint="@color/black" />
-
-        <!-- Places Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnPlaces"
-            android:layout_width="0sp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@android:color/transparent"
-            android:gravity="center"
-            android:insetTop="0sp"
-            android:insetBottom="0sp"
-            android:singleLine="true"
-            android:textColor="@android:color/black"
-            app:cornerRadius="0sp"
-            app:icon="@drawable/marker"
-            app:iconGravity="top"
-            app:iconPadding="4sp"
-            app:iconTint="@color/black" />
-
-        <!-- Circle Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnCircle"
-            android:layout_width="0sp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@android:color/transparent"
-            android:gravity="center"
-            android:insetTop="0sp"
-            android:insetBottom="0sp"
-            android:singleLine="true"
-            android:textColor="@android:color/black"
-            app:cornerRadius="0sp"
-            app:icon="@drawable/circles"
-            app:iconGravity="top"
-            app:iconPadding="4sp"
-            app:iconTint="@color/black" />
-
-        <!-- Account Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnAccount"
-            android:layout_width="0sp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@android:color/transparent"
-            android:gravity="center"
-            android:insetTop="0sp"
-            android:insetBottom="0sp"
-            android:singleLine="true"
-            android:textColor="@android:color/black"
-            app:cornerRadius="0sp"
-            app:icon="@drawable/account"
-            app:iconGravity="top"
-            app:iconPadding="4sp"
-            app:iconTint="@color/black" />
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_nav_menu" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

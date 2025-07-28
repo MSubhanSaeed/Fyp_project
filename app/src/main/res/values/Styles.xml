@@ -10,4 +10,13 @@
         <item name="android:maxLength">1</item>
         <item name="android:textSize">18sp</item>
         </style>
+    <style name="BottomNavButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/nav_button_default</item>
+    </style>
+
+    <!-- Optional colors -->
+    <color name="transparent">#00000000</color>
+    <color name="nav_button_default">#888888</color>
+    <color name="nav_button_selected">#1E293B</color>
+
 </resources>

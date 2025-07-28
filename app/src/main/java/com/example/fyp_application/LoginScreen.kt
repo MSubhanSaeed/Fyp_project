@@ -26,16 +26,16 @@ import kotlinx.coroutines.withContext
 class LoginScreen : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginScreenBinding
-    private lateinit var sharPref: SharedPreferences
+    private lateinit var sharedPref: SharedPreferences
     private val TAG = "LoginScreen"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        sharPref = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+        sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE)
 
-        // Redirect to Home if user is already logged in
-        if (sharPref.getInt("userid", -1) > 0) {
+        // Auto-login if already logged in
+        if (sharedPref.getInt("userid", -1) > 0) {
             redirectToHomeScreen()
             return
         }
@@ -46,7 +46,24 @@ class LoginScreen : AppCompatActivity() {
         setupCheckBox()
         setupSignupTextView()
 
+        // Initial button state
+        setLoginButtonEnabled(false)
+
+        // Enable login only when terms are accepted
+        binding.checkBox2.setOnCheckedChangeListener { _, isChecked ->
+            setLoginButtonEnabled(isChecked)
+        }
+
         binding.appCompatButton.setOnClickListener {
+            if (!binding.checkBox2.isChecked) {
+                Toast.makeText(
+                    this,
+                    "Please accept the Terms and Conditions to continue",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
             val email = binding.editText.text.toString().trim()
             val password = binding.editText2.text.toString().trim()
 
@@ -56,68 +73,70 @@ class LoginScreen : AppCompatActivity() {
         }
     }
 
+    private fun setLoginButtonEnabled(enabled: Boolean) {
+        binding.appCompatButton.isEnabled = enabled
+    }
+
+
     private fun redirectToHomeScreen() {
-        val intent = Intent(this, HomeScreen::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        val intent = Intent(this, HomeScreen::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
         startActivity(intent)
         finish()
     }
 
     private fun validateInput(email: String, password: String): Boolean {
-        if (email.isEmpty()) {
-            binding.editText.error = "Email is required"
-            binding.editText.requestFocus()
-            return false
+        return when {
+            email.isEmpty() -> {
+                binding.editText.error = "Email is required"
+                binding.editText.requestFocus()
+                false
+            }
+            !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                binding.editText.error = "Please enter a valid email"
+                binding.editText.requestFocus()
+                false
+            }
+            password.isEmpty() -> {
+                binding.editText2.error = "Password is required"
+                binding.editText2.requestFocus()
+                false
+            }
+            else -> true
         }
-
-        if (password.isEmpty()) {
-            binding.editText2.error = "Password is required"
-            binding.editText2.requestFocus()
-            return false
-        }
-
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.editText.error = "Please enter a valid email"
-            binding.editText.requestFocus()
-            return false
-        }
-
-        return true
     }
 
     private fun loginUser(email: String, password: String) {
-        binding.appCompatButton.isEnabled = false
+        setLoginButtonEnabled(false)
         binding.appCompatButton.text = "Logging in..."
 
         val loginUser = LoginUserEntity(email, password)
-        Log.d(TAG, "Sending login request with email: $email")
+        Log.d(TAG, "Attempting login for: $email")
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val call = RetrofitClient.getInstance()
-                    .getUserApiService()
-                    .loginUser(loginUser)
-
+                val call = RetrofitClient.getInstance().getUserApiService().loginUser(loginUser)
                 val response = call.execute()
 
                 withContext(Dispatchers.Main) {
-                    binding.appCompatButton.isEnabled = true
                     binding.appCompatButton.text = "Login"
+                    setLoginButtonEnabled(binding.checkBox2.isChecked)
 
                     if (response.isSuccessful && response.body() != null) {
                         val user = response.body()!!
 
-                        with(sharPref.edit()) {
+                        with(sharedPref.edit()) {
                             putInt("userid", user.userId)
                             putString("userName", user.name)
                             putString("userEmail", user.email)
                             apply()
                         }
 
-                        Log.d(TAG, "Login successful. User data saved.")
+                        Log.d(TAG, "Login successful, redirecting to Home.")
                         redirectToHomeScreen()
                     } else {
-                        Log.d(TAG, "Login failed: ${response.message()}")
+                        Log.w(TAG, "Login failed: ${response.message()}")
                         Toast.makeText(
                             this@LoginScreen,
                             "Invalid email or password",
@@ -126,10 +145,10 @@ class LoginScreen : AppCompatActivity() {
                     }
                 }
             } catch (e: Exception) {
-                Log.e(TAG, "Login error: ${e.message}", e)
+                Log.e(TAG, "Login exception: ${e.message}", e)
                 withContext(Dispatchers.Main) {
-                    binding.appCompatButton.isEnabled = true
                     binding.appCompatButton.text = "Login"
+                    setLoginButtonEnabled(binding.checkBox2.isChecked)
                     Toast.makeText(
                         this@LoginScreen,
                         "Network error: ${e.message}",
@@ -142,15 +161,12 @@ class LoginScreen : AppCompatActivity() {
 
     private fun setupCheckBox() {
         val checkBox: CheckBox = binding.checkBox2
-        val checkBoxText = "By creating an account, you agree to our terms and condition"
-        val checkBoxSpannableString = SpannableString(checkBoxText)
-
-        val startIndex = checkBoxText.indexOf("terms and condition")
-        val endIndex = startIndex + "terms and condition".length
+        val fullText = "By creating an account, you agree to our terms and condition"
+        val spannableString = SpannableString(fullText)
 
         val clickableSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
-                Toast.makeText(this@LoginScreen, "Terms and Conditions clicked!", Toast.LENGTH_SHORT).show()
+                // Optional: Launch Terms and Conditions Activity
             }
 
             override fun updateDrawState(ds: TextPaint) {
@@ -160,25 +176,19 @@ class LoginScreen : AppCompatActivity() {
             }
         }
 
-        checkBoxSpannableString.setSpan(
-            clickableSpan,
-            startIndex,
-            endIndex,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
+        val startIndex = fullText.indexOf("terms and condition")
+        val endIndex = startIndex + "terms and condition".length
 
-        checkBox.text = checkBoxSpannableString
+        spannableString.setSpan(clickableSpan, startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        checkBox.text = spannableString
         checkBox.movementMethod = LinkMovementMethod.getInstance()
         checkBox.highlightColor = Color.TRANSPARENT
     }
 
     private fun setupSignupTextView() {
-        val textViewSignup = binding.textViewSignup
-        val signupText = "Don't have an account? Signup"
-        val spannableString = SpannableString(signupText)
-
-        val startIndex = signupText.indexOf("Signup")
-        val endIndex = startIndex + "Signup".length
+        val fullText = "Don't have an account? Signup"
+        val spannableString = SpannableString(fullText)
 
         val clickableSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
@@ -192,15 +202,13 @@ class LoginScreen : AppCompatActivity() {
             }
         }
 
-        spannableString.setSpan(
-            clickableSpan,
-            startIndex,
-            endIndex,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
+        val startIndex = fullText.indexOf("Signup")
+        val endIndex = startIndex + "Signup".length
 
-        textViewSignup.text = spannableString
-        textViewSignup.movementMethod = LinkMovementMethod.getInstance()
-        textViewSignup.highlightColor = Color.TRANSPARENT
+        spannableString.setSpan(clickableSpan, startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        binding.textViewSignup.text = spannableString
+        binding.textViewSignup.movementMethod = LinkMovementMethod.getInstance()
+        binding.textViewSignup.highlightColor = Color.TRANSPARENT
     }
 }
